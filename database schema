@@ -1,0 +1,28 @@
+CREATE DATABASE LMSDB;
+
+USE LMSDB;
+
+-- Table for Students
+CREATE TABLE Students (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(50) NOT NULL,
+    email VARCHAR(50) UNIQUE NOT NULL,
+    enrolled_date DATE
+);
+
+-- Table for Courses
+CREATE TABLE Courses (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(100) NOT NULL,
+    description TEXT,
+    instructor VARCHAR(50)
+);
+
+-- Table for Enrollments (many-to-many relationship between Students and Courses)
+CREATE TABLE Enrollments (
+    student_id INT,
+    course_id INT,
+    PRIMARY KEY (student_id, course_id),
+    FOREIGN KEY (student_id) REFERENCES Students(id),
+    FOREIGN KEY (course_id) REFERENCES Courses(id)
+);
