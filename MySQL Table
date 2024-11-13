@@ -1,0 +1,24 @@
+CREATE DATABASE CollegeProject;
+USE CollegeProject;
+
+CREATE TABLE Student (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(100),
+    age INT,
+    email VARCHAR(100)
+);
+
+CREATE TABLE Course (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    course_name VARCHAR(100),
+    instructor VARCHAR(100)
+);
+
+CREATE TABLE Enrollment (
+    student_id INT,
+    course_id INT,
+    enrollment_date DATE,
+    PRIMARY KEY (student_id, course_id),
+    FOREIGN KEY (student_id) REFERENCES Student(id),
+    FOREIGN KEY (course_id) REFERENCES Course(id)
+);
