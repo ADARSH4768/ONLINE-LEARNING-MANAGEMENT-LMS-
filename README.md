@@ -1,4 +1,5 @@
 Overview
+
 LMSProject is a backend application for a simple Learning Management System (LMS) developed in Java. It uses a MySQL database and JDBC (Java Database Connectivity) to enable basic functionalities, including adding, retrieving, and managing students and courses within the system. This project is intended as a foundational example for building a fully functional LMS and serves as a hands-on learning tool for Java database operations, object-oriented programming, and DAO (Data Access Object) patterns.
 
 Key features of LMSProject:
