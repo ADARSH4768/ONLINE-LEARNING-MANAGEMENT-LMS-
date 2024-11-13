@@ -1,0 +1,153 @@
+Course.java (Model)
+package com.lms.model;
+
+public class Course {
+    private int id;
+    private String title;
+    private String description;
+    private String instructor;
+
+    public Course(int id, String title, String description, String instructor) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.instructor = instructor;
+    }
+
+    // Getters and Setters
+}
+Student.java (Model)
+package com.lms.model;
+
+import java.util.Date;
+
+public class Student {
+    private int id;
+    private String name;
+    private String email;
+    private Date enrolledDate;
+
+    public Student(int id, String name, String email, Date enrolledDate) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.enrolledDate = enrolledDate;
+    }
+
+    // Getters and Setters
+}
+CourseDAO.java
+package com.lms.dao;
+
+import com.lms.model.Course;
+import com.lms.util.DatabaseUtil;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+public class CourseDAO {
+    public void addCourse(Course course) {
+        String query = "INSERT INTO Courses (title, description, instructor) VALUES (?, ?, ?)";
+        try (Connection connection = DatabaseUtil.getConnection();
+             PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setString(1, course.getTitle());
+            ps.setString(2, course.getDescription());
+            ps.setString(3, course.getInstructor());
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public Course getCourseById(int id) {
+        String query = "SELECT * FROM Courses WHERE id = ?";
+        try (Connection connection = DatabaseUtil.getConnection();
+             PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                return new Course(rs.getInt("id"), rs.getString("title"), rs.getString("description"), rs.getString("instructor"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+}
+StudentDAO.java
+package com.lms.dao;
+
+import com.lms.model.Student;
+import com.lms.util.DatabaseUtil;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+public class StudentDAO {
+    public void addStudent(Student student) {
+        String query = "INSERT INTO Students (name, email, enrolled_date) VALUES (?, ?, ?)";
+        try (Connection connection = DatabaseUtil.getConnection();
+             PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setString(1, student.getName());
+            ps.setString(2, student.getEmail());
+            ps.setDate(3, new java.sql.Date(student.getEnrolledDate().getTime()));
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public Student getStudentById(int id) {
+        String query = "SELECT * FROM Students WHERE id = ?";
+        try (Connection connection = DatabaseUtil.getConnection();
+             PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                return new Student(rs.getInt("id"), rs.getString("name"), rs.getString("email"), rs.getDate("enrolled_date"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+}
+
+Main.java (Testing)
+package com.lms;
+
+import com.lms.dao.CourseDAO;
+import com.lms.dao.StudentDAO;
+import com.lms.model.Course;
+import com.lms.model.Student;
+
+import java.util.Date;
+
+public class Main {
+    public static void main(String[] args) {
+        CourseDAO courseDAO = new CourseDAO();
+        StudentDAO studentDAO = new StudentDAO();
+
+        // Adding a course
+        Course course = new Course(0, "Java Programming", "Learn Java from scratch", "John Doe");
+        courseDAO.addCourse(course);
+
+        // Adding a student
+        Student student = new Student(0, "Alice", "alice@example.com", new Date());
+        studentDAO.addStudent(student);
+
+        // Fetch course by ID
+        Course fetchedCourse = courseDAO.getCourseById(1);
+        System.out.println("Fetched Course: " + fetchedCourse.getTitle());
+
+        // Fetch student by ID
+        Student fetchedStudent = studentDAO.getStudentById(1);
+        System.out.println("Fetched Student: " + fetchedStudent.getName());
+    }
+}
