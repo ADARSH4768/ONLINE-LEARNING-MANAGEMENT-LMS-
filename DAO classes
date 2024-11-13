@@ -1,4 +1,4 @@
-Course.java (Model)
+// Course.java (Model)
 package com.lms.model;
 
 public class Course {
@@ -16,7 +16,8 @@ public class Course {
 
     // Getters and Setters
 }
-Student.java (Model)
+
+// Student.java (Model)
 package com.lms.model;
 
 import java.util.Date;
@@ -36,7 +37,8 @@ public class Student {
 
     // Getters and Setters
 }
-CourseDAO.java
+
+// CourseDAO.java
 package com.lms.dao;
 
 import com.lms.model.Course;
@@ -77,7 +79,8 @@ public class CourseDAO {
         return null;
     }
 }
-StudentDAO.java
+
+// StudentDAO.java
 package com.lms.dao;
 
 import com.lms.model.Student;
@@ -119,35 +122,4 @@ public class StudentDAO {
     }
 }
 
-Main.java (Testing)
-package com.lms;
 
-import com.lms.dao.CourseDAO;
-import com.lms.dao.StudentDAO;
-import com.lms.model.Course;
-import com.lms.model.Student;
-
-import java.util.Date;
-
-public class Main {
-    public static void main(String[] args) {
-        CourseDAO courseDAO = new CourseDAO();
-        StudentDAO studentDAO = new StudentDAO();
-
-        // Adding a course
-        Course course = new Course(0, "Java Programming", "Learn Java from scratch", "John Doe");
-        courseDAO.addCourse(course);
-
-        // Adding a student
-        Student student = new Student(0, "Alice", "alice@example.com", new Date());
-        studentDAO.addStudent(student);
-
-        // Fetch course by ID
-        Course fetchedCourse = courseDAO.getCourseById(1);
-        System.out.println("Fetched Course: " + fetchedCourse.getTitle());
-
-        // Fetch student by ID
-        Student fetchedStudent = studentDAO.getStudentById(1);
-        System.out.println("Fetched Student: " + fetchedStudent.getName());
-    }
-}
