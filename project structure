@@ -1,0 +1,15 @@
+LMSProject/
+├── src/
+│   ├── main/
+│   │   ├── java/
+│   │   │   ├── com/
+│   │   │   │   ├── lms/
+│   │   │   │   │   ├── Main.java
+│   │   │   │   │   ├── dao/
+│   │   │   │   │   │   ├── CourseDAO.java
+│   │   │   │   │   │   ├── StudentDAO.java
+│   │   │   │   │   ├── model/
+│   │   │   │   │   │   ├── Course.java
+│   │   │   │   │   │   ├── Student.java
+│   │   │   │   │   ├── util/
+│   │   │   │   │   │   ├── DatabaseUtil.java 
